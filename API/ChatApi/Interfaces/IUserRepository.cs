@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using ChatApi.DTOs;
 using ChatApi.Models;
@@ -19,5 +20,6 @@ namespace ChatApi.Interfaces
         void Delete(User user);
         Task<bool> UserExists(int id);
         Task<bool> UserExists(string username);
+        void AddUser(User user);
     }
 }

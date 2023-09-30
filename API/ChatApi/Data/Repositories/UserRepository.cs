@@ -22,6 +22,12 @@ namespace ChatApi.Data.Repositories
             _context = context;
 
         }
+
+        public void AddUser(User user)
+        {
+            _context.Add(user);
+        }
+
         public void Delete(User user)
         {
             _context.Remove(user);

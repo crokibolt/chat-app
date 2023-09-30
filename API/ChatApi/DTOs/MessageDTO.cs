@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace ChatApi.DTOs
 {
-    public class MemberDTO
+    public class MessageDTO
     {
         public int Id { get; set; }
-        public string UserName { get; set; }
-        public ICollection<MessageDTO> Messages { get; set; }
+        public string Text { get; set; }
+        public SenderDTO User { get; set; }
     }
 }

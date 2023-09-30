@@ -1,3 +1,4 @@
+using ChatApi.Data;
 using ChatApi.Data.Context;
 using ChatApi.Data.Repositories;
 using ChatApi.Interfaces;
@@ -32,5 +33,20 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+
+try
+{
+    var context = services.GetRequiredService<ChatContext>();
+    await context.Database.MigrateAsync();
+    await Seed.SeedUsers(context);
+}
+catch (Exception ex)
+{
+    var logger = services.GetService<ILogger<Program>>();
+    logger.LogError(ex, "An error ocurred during migration");
+}
 
 app.Run();

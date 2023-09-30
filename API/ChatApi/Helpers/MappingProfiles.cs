@@ -13,6 +13,9 @@ namespace ChatApi.Helpers
         public MappingProfiles()
         {
             CreateMap<User, MemberDTO>().ReverseMap();
+            CreateMap<User, RegisterDTO>().ReverseMap();
+            CreateMap<User, SenderDTO>().ReverseMap();
+            CreateMap<Message, MessageDTO>().ReverseMap();
         }
     }
 }
