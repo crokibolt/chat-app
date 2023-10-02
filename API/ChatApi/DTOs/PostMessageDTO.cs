@@ -7,7 +7,6 @@ namespace ChatApi.DTOs
 {
     public class PostMessageDTO
     {
-        public string Username { get; set; }
         public string Text { get; set; }
     }
 }

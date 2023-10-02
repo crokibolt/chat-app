@@ -1,15 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using ChatApi.DTOs;
 using ChatApi.Interfaces;
 using ChatApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChatApi.Controllers
 {
+    [Authorize]
     public class UsersController : BaseApiController
     {
         private readonly IUserRepository _userRepository;
@@ -40,6 +43,15 @@ namespace ChatApi.Controllers
                 return BadRequest(ModelState);
 
             return Ok(user);
+        }
+
+        [HttpGet("current")]
+        public ActionResult GetCurrentUserName()
+        {
+            var username = HttpContext.User.Claims.First(c =>
+                    c.Type == ClaimTypes.Name).Value;
+
+            return Ok(username);
         }
     }
 }

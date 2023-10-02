@@ -7,6 +7,14 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddAuthentication("default")
+    .AddCookie("default", o =>
+    {
+        o.Cookie.Name = "auth";
+        o.Cookie.Domain = "";
+        o.ExpireTimeSpan = TimeSpan.FromMinutes(40);
+        o.SlidingExpiration = true;
+    });
 
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -31,6 +39,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

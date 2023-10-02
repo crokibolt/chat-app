@@ -1,15 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using ChatApi.DTOs;
 using ChatApi.Interfaces;
 using ChatApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChatApi.Controllers
 {
+    [Authorize]
     public class MessagesController : BaseApiController
     {
         private readonly IMapper _mapper;
@@ -62,20 +65,22 @@ namespace ChatApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<MessageDTO>> AddMessage(PostMessageDTO postMessage)
-
+        public async Task<ActionResult<MessageDTO>> AddMessage(PostMessageDTO messageDTO)
         {
-            if (!await _userRepository.UserExists(postMessage.Username.ToLower()))
-                return BadRequest("User does not exist");
 
-            var user = await _userRepository.GetUserByUsernameAsync(postMessage.Username.ToLower());
+            // if (!await _userRepository.UserExists(postMessage.Username.ToLower()))
+            //     return BadRequest("User does not exist");
+            var username = HttpContext.User.Claims.First(c =>
+                    c.Type == ClaimTypes.Name).Value;
+
+            var user = await _userRepository.GetUserByUsernameAsync(username);
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var message = new Message
             {
-                Text = postMessage.Text.Trim(),
+                Text = messageDTO.Text.Trim(),
                 User = user
             };
 
@@ -97,9 +102,15 @@ namespace ChatApi.Controllers
             if (!await _messageRepository.MessageExists(id))
                 return BadRequest("Message does not exist");
 
+            var username = HttpContext.User.Claims.First(c =>
+                    c.Type == ClaimTypes.Name).Value;
+
             var messageToDelete = _mapper.Map<Message>(
                 await _messageRepository.GetMessageAsync(id)
             );
+
+            if (!(messageToDelete.User.UserName == username))
+                return Unauthorized("Can not delete message that's not yours");
 
             _messageRepository.DeleteMessage(messageToDelete);
 
