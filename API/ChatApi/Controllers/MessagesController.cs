@@ -5,10 +5,12 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using ChatApi.DTOs;
+using ChatApi.Hubs;
 using ChatApi.Interfaces;
 using ChatApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace ChatApi.Controllers
 {
@@ -18,13 +20,16 @@ namespace ChatApi.Controllers
         private readonly IMapper _mapper;
         private readonly IMessageRepository _messageRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IHubContext<ChatHub> _hubContext;
         public MessagesController(IMessageRepository messageRepository,
                                     IMapper mapper,
-                                    IUserRepository userRepository)
+                                    IUserRepository userRepository,
+                                    IHubContext<ChatHub> hubContext)
         {
             _userRepository = userRepository;
             _mapper = mapper;
             _messageRepository = messageRepository;
+            _hubContext = hubContext;
         }
 
         [HttpGet]
@@ -68,8 +73,6 @@ namespace ChatApi.Controllers
         public async Task<ActionResult<MessageDTO>> AddMessage(PostMessageDTO messageDTO)
         {
 
-            // if (!await _userRepository.UserExists(postMessage.Username.ToLower()))
-            //     return BadRequest("User does not exist");
             var username = HttpContext.User.Claims.First(c =>
                     c.Type == ClaimTypes.Name).Value;
 
@@ -92,6 +95,9 @@ namespace ChatApi.Controllers
                 return StatusCode(500, ModelState);
 
             }
+
+            await _hubContext.Clients.All.SendAsync("ReceiveMessage", "New Message",
+                 message.User.UserName, message.Text);
 
             return _mapper.Map<MessageDTO>(message);
         }

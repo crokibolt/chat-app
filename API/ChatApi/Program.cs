@@ -1,6 +1,7 @@
 using ChatApi.Data;
 using ChatApi.Data.Context;
 using ChatApi.Data.Repositories;
+using ChatApi.Hubs;
 using ChatApi.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,6 +22,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 
+builder.Services.AddSignalR();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -44,6 +46,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<ChatHub>("chatHub");
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
