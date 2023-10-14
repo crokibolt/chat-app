@@ -3,8 +3,10 @@ using ChatApi.Data.Context;
 using ChatApi.Data.Repositories;
 using ChatApi.Hubs;
 using ChatApi.Interfaces;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
+var allowOrigins = "_allowOrigins";
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -12,10 +14,33 @@ builder.Services.AddAuthentication("default")
     .AddCookie("default", o =>
     {
         o.Cookie.Name = "auth";
-        o.Cookie.Domain = "";
+        o.Cookie.Domain = "localhost";
+        o.Cookie.SameSite = SameSiteMode.None;
+        o.Cookie.SecurePolicy = CookieSecurePolicy.Always;
         o.ExpireTimeSpan = TimeSpan.FromMinutes(40);
         o.SlidingExpiration = true;
+        o.Events = new CookieAuthenticationEvents()
+        {
+            OnRedirectToLogin = (context) =>
+            {
+                context.HttpContext.Response.StatusCode = 401;
+                return Task.CompletedTask;
+            }
+        };
     });
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: allowOrigins,
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000", "https://localhost:3000")
+                                        .AllowCredentials()
+                                        .AllowAnyHeader()
+                                        .AllowAnyMethod();
+        });
+});
 
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -39,8 +64,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseCors(allowOrigins);
 
+app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
