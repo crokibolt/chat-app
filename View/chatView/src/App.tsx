@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import "./App.css";
 import { useNavigate } from "react-router-dom";
-import userLoggedIn, { login } from "../src/Helpers/loginHelper.ts";
+import userLoggedIn, { login } from "./Helpers/fetchHelper.ts";
 
 function App() {
   const [username, setUsername] = useState("");

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import userLoggedIn from "../Helpers/loginHelper";
+import userLoggedIn from "../Helpers/fetchHelper";
 import { useNavigate } from "react-router-dom";
 
 function Chat() {
