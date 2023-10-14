@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import "./App.css";
-import { redirect, useNavigate } from "react-router-dom";
-import userLoggedIn from "../src/Helpers/loginHelper.js";
+import { useNavigate } from "react-router-dom";
+import userLoggedIn, { login } from "../src/Helpers/loginHelper.ts";
 
 function App() {
   const [username, setUsername] = useState("");
@@ -10,21 +10,11 @@ function App() {
 
   useEffect(() => {
     const func = async () => {
-      await fetch("https://localhost:7178/api/Users/current", {
-        method: "GET",
-        credentials: "include",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => {
-          if (res.ok) {
-            navigate("/chat");
-          }
-        })
-        .catch((err) => console.error(err));
+      if (await userLoggedIn()) {
+        navigate("/chat");
+      }
     };
+
     func();
   }, []);
 
@@ -49,22 +39,7 @@ function App() {
       password: password,
     };
 
-    fetch("https://localhost:7178/api/Account/login", {
-      method: "POST",
-      mode: "cors",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(jsonData),
-    })
-      .then((res) => {
-        resetForm();
-        if (res.ok) {
-          navigate("/chat");
-        }
-      })
-      .catch((err) => console.error(err));
+    login(jsonData, resetForm, navigate);
   };
 
   return (

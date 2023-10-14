@@ -2,11 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
-import {
-  RouterProvider,
-  createBrowserRouter,
-  redirect,
-} from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Chat from "./Pages/Chat.tsx";
 
 const router = createBrowserRouter([
