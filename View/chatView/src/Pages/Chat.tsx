@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import userLoggedIn from "../Helpers/fetchHelper";
 import { useNavigate } from "react-router-dom";
+import Messages from "../Components/Messages";
+import MessageForm from "../Components/MessageForm";
 
 function Chat() {
   const navigate = useNavigate();
@@ -11,11 +13,15 @@ function Chat() {
         navigate("/");
       }
     };
-
     func();
   }, []);
 
-  return <div>Chat</div>;
+  return (
+    <div>
+      <Messages />
+      <MessageForm />
+    </div>
+  );
 }
 
 export default Chat;

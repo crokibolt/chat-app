@@ -13,11 +13,11 @@ namespace ChatApi.Hubs
     {
         public override async Task OnConnectedAsync()
         {
-            var username = Context?.User?.Claims.First(c =>
-                    c.Type == ClaimTypes.Name).Value;
+            // var username = Context?.User?.Claims.First(c =>
+            //         c.Type == ClaimTypes.Name).Value;
 
             await Clients.All.SendAsync("ReceiveMessage", "New user",
-                $"{username} has joined.");
+                "new user has joined.");
         }
     }
 }
