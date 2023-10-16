@@ -1,3 +1,4 @@
+import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../Helpers/fetchHelper";
 
 interface HeaderProps {
@@ -10,7 +11,9 @@ function Header({ username }: HeaderProps) {
       className="w-screen h-80px flex justify-between p-5 bg-orange-600 
         text-gray-800"
     >
-      <h1 className="text-4xl select-none">Awesome Chat</h1>
+      <a className="text-4xl select-none cursor-pointer" href="/">
+        Awesome Chat
+      </a>
       {username != "" ? (
         <h3 onClick={() => logout()} className="text-2xl cursor-pointer group">
           Logout

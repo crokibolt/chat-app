@@ -9,12 +9,17 @@ import {
   usernameContext,
 } from "./Context/UsernameContext.tsx";
 import Register from "./Pages/Register.tsx";
+import Home from "./Pages/Home.tsx";
 
 function App() {
   const [username, setUsername] = useState("");
   const router = createBrowserRouter([
     {
       path: "/",
+      element: <Home />,
+    },
+    {
+      path: "/login",
       element: <Login />,
     },
     {
