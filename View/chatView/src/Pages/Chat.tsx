@@ -1,15 +1,20 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import userLoggedIn from "../Helpers/fetchHelper";
 import { useNavigate } from "react-router-dom";
 import Messages from "../Components/Messages";
 import MessageForm from "../Components/MessageForm";
+import { setUsernameContext } from "../Context/UsernameContext";
 
 function Chat() {
+  const context = useContext(setUsernameContext);
   const navigate = useNavigate();
 
   useEffect(() => {
     const func = async () => {
-      if (!(await userLoggedIn())) {
+      const user = await userLoggedIn();
+      context ? context(user) : null;
+      if (user == "" && context) {
+        context("");
         navigate("/");
       }
     };

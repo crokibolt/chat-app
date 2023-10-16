@@ -1,74 +1,36 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import "./App.css";
-import { useNavigate } from "react-router-dom";
-import userLoggedIn, { login } from "./Helpers/fetchHelper.ts";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Header from "./Components/Header.tsx";
+import Chat from "./Pages/Chat.tsx";
+import Login from "./Pages/Login.tsx";
+import { useState } from "react";
+import { setUsernameContext } from "./Context/UsernameContext.tsx";
+import Register from "./Pages/Register.tsx";
 
 function App() {
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const func = async () => {
-      if (await userLoggedIn()) {
-        navigate("/chat");
-      }
-    };
-
-    func();
-  }, []);
-
-  const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.target.value);
-  };
-
-  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-
-  const resetForm = () => {
-    setUsername("");
-    setPassword("");
-  };
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const jsonData = {
-      username: username,
-      password: password,
-    };
-
-    login(jsonData, resetForm, navigate);
-  };
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Login />,
+    },
+    {
+      path: "/chat",
+      element: <Chat />,
+    },
+    {
+      path: "/register",
+      element: <Register />,
+    },
+  ]);
 
   return (
-    <div>
-      <h1>Login</h1>
-      <form method="post" onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username</label> <br />
-          <input
-            type="text"
-            value={username}
-            onChange={handleUsernameChange}
-            name="username"
-            id="username"
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password</label> <br />
-          <input
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
-            name="password"
-            id="password"
-          />
-        </div>
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+    <>
+      <Header username={username} />
+      <setUsernameContext.Provider value={setUsername}>
+        <RouterProvider router={router} />
+      </setUsernameContext.Provider>
+    </>
   );
 }
 

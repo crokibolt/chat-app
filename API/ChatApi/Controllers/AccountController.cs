@@ -48,7 +48,7 @@ namespace ChatApi.Controllers
                 UserName = user.UserName
             };
 
-            return userToReturn;
+            return Ok(userToReturn);
         }
 
         [HttpPost("login")]

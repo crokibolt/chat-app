@@ -46,12 +46,13 @@ namespace ChatApi.Controllers
         }
 
         [HttpGet("current")]
-        public ActionResult GetCurrentUserName()
+        public async Task<ActionResult<MemberDTO>> GetCurrentUserName()
         {
             var username = HttpContext.User.Claims.First(c =>
                     c.Type == ClaimTypes.Name).Value;
+            var user = new { username };
 
-            return Ok(username);
+            return Ok(user);
         }
     }
 }
