@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
+import { postMessageReq } from "../Helpers/fetchHelper";
 
 const MessageForm = () => {
   const [messageValue, setMessageValue] = useState("");
@@ -9,17 +10,7 @@ const MessageForm = () => {
   const messagePost = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    await fetch("https://localhost:7178/api/Messages", {
-      method: "POST",
-      mode: "cors",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        text: messageValue,
-      }),
-    }).then(() => setMessageValue(""));
+    postMessageReq({ text: messageValue }, setMessageValue);
   };
 
   return (

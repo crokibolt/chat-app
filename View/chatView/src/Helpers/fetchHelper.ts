@@ -87,6 +87,19 @@ const register = async (data : LoginData, reset: () => void,
 };
 
 
+const postMessageReq = async (data : {text : string},
+   setValue : (value: React.SetStateAction<string>) => void) => {
+    await fetch("https://localhost:7178/api/Messages", {
+      method: "POST",
+      mode: "cors",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then(() => setValue(""));
+   };
+
 
 export default userLoggedIn;
-export { login, logout, register };
+export { login, logout, register, postMessageReq };
