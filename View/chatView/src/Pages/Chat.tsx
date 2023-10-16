@@ -22,7 +22,7 @@ function Chat() {
   }, []);
 
   return (
-    <div>
+    <div className="text-lg w-[1200px] h-[700px] mt-[60px] mx-auto shadow-xl rounded-lg">
       <Messages />
       <MessageForm />
     </div>

@@ -72,6 +72,8 @@ namespace ChatApi.Controllers
         [HttpPost]
         public async Task<ActionResult<MessageDTO>> AddMessage(PostMessageDTO messageDTO)
         {
+            if (messageDTO.Text.Trim().Length == 0)
+                return NoContent();
 
             var username = HttpContext.User.Claims.First(c =>
                     c.Type == ClaimTypes.Name).Value;

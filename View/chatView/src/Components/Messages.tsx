@@ -1,5 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  LegacyRef,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import * as signalR from "@microsoft/signalr";
+import { usernameContext } from "../Context/UsernameContext";
+import { useFetcher } from "react-router-dom";
+import Message from "./Message";
 
 interface Message {
   type: string;
@@ -10,6 +19,9 @@ interface Message {
 const Messages = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [connection, setConnection] = useState<signalR.HubConnection>();
+
+  const username = useContext(usernameContext);
+  const last = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const hubConnection = new signalR.HubConnectionBuilder()
@@ -35,16 +47,23 @@ const Messages = () => {
     });
   }, [connection]);
 
+  useEffect(() => {
+    last.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
-    <>
+    <div className="h-[90%] w-full bg-amber-300 rounded-lg p-3 overflow-auto">
       {messages.map((message, index) => (
         <div key={`message-${index}`}>
-          {message.type == "New message" ? <p>{message.username}</p> : null}
-
-          <p>{message.text}</p>
+          {message.type == "New Message" ? (
+            <Message message={message} current={username} />
+          ) : (
+            <p className="text-center p-1 text-gray-700">{message.username}</p>
+          )}
         </div>
       ))}
-    </>
+      <div ref={last}></div>
+    </div>
   );
 };
 

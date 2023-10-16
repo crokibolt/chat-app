@@ -23,17 +23,16 @@ const MessageForm = () => {
   };
 
   return (
-    <form onSubmit={messagePost}>
-      <div>
-        <input
-          type="text"
-          value={messageValue}
-          onChange={handleMessageChange}
-          name="message"
-          id="message"
-        />
-      </div>
-      <button>Send</button>
+    <form onSubmit={messagePost} className="flex h-[10%]">
+      <input
+        type="text"
+        value={messageValue}
+        onChange={handleMessageChange}
+        name="message"
+        id="message"
+        className="flex-1 h-full rounded-lg p-3"
+      />
+      <button className="p-3">Send</button>
     </form>
   );
 };
