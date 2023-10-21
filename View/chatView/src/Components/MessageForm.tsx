@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { postMessageReq } from "../Helpers/fetchHelper";
 
 const MessageForm = () => {

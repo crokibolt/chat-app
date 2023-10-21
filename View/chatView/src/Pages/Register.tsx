@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setUsernameContext } from "../Context/UsernameContext";
-import userLoggedIn, { login, register } from "../Helpers/fetchHelper";
+import userLoggedIn, { register } from "../Helpers/fetchHelper";
 
 function Register() {
   const [username, setUsername] = useState("");

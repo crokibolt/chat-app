@@ -7,7 +7,7 @@ interface LoginData {
 
 const login = async (data : LoginData, reset: () => void,
    setError : React.Dispatch<React.SetStateAction<boolean>>) => {
-  fetch("https://localhost:7178/api/Account/login", {
+  fetch("https://chat-api-8ur2.onrender.com/api/Account/login", {
     method: "POST",
     mode: "cors",
     credentials: "include",
@@ -28,7 +28,7 @@ const login = async (data : LoginData, reset: () => void,
 };
 
 const logout = async () => {
-  await fetch("https://localhost:7178/api/Account/logout", {
+  await fetch("https://chat-api-8ur2.onrender.com/api/Account/logout", {
     method: "GET",
     mode: "cors",
     credentials: "include",
@@ -44,7 +44,7 @@ const logout = async () => {
 }
 
 const userLoggedIn = async () => {
-  var result = await fetch("https://localhost:7178/api/Users/current", {
+  var result = await fetch("https://chat-api-8ur2.onrender.com/api/Users/current", {
     method: "GET",
     credentials: "include",
     mode: "cors",
@@ -66,7 +66,7 @@ const userLoggedIn = async () => {
 
 const register = async (data : LoginData, reset: () => void,
    setError : React.Dispatch<React.SetStateAction<boolean>>, navigate : NavigateFunction) => {
-  fetch("https://localhost:7178/api/Account/register", {
+  fetch("https://chat-api-8ur2.onrender.com/api/Account/register", {
     method: "POST",
     mode: "cors",
     credentials: "include",
@@ -89,7 +89,7 @@ const register = async (data : LoginData, reset: () => void,
 
 const postMessageReq = async (data : {text : string},
    setValue : (value: React.SetStateAction<string>) => void) => {
-    await fetch("https://localhost:7178/api/Messages", {
+    await fetch("https://chat-api-8ur2.onrender.com/api/Messages", {
       method: "POST",
       mode: "cors",
       credentials: "include",

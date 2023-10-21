@@ -1,13 +1,6 @@
-import React, {
-  LegacyRef,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import * as signalR from "@microsoft/signalr";
 import { usernameContext } from "../Context/UsernameContext";
-import { useFetcher } from "react-router-dom";
 import Message from "./Message";
 
 interface Message {
@@ -25,7 +18,7 @@ const Messages = () => {
 
   useEffect(() => {
     const hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl("https://localhost:7178/chathub")
+      .withUrl("https://chat-api-8ur2.onrender.com/chathub")
       .withAutomaticReconnect()
       .build();
 

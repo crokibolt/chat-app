@@ -4,11 +4,12 @@ import fs from 'fs';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "/chat-app",
   plugins: [react()],
   server: {
     https: {
       key: fs.readFileSync("./localhost-key.pem"),
       cert: fs.readFileSync("./localhost.pem")
-    }
+    },
   },
 })
