@@ -14,3 +14,17 @@ npm install
 npm run dev
 ```
 
+## Resources
+- [React](https://react.dev/).
+
+- [Tailwind CSS](https://tailwindcss.com/).
+
+- [ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/?view=aspnetcore-7.0) to build the API.
+
+- [Docker](https://www.docker.com/) to containerize the API.
+
+- API deployed in [render](https://render.com/).
+
+- Frontend bootstrapped with [Vite](https://vitejs.dev/).
+
+- Page deployed using [GitHub Pages](https://pages.github.com/).
