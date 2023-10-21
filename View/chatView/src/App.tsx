@@ -13,24 +13,29 @@ import Home from "./Pages/Home.tsx";
 
 function App() {
   const [username, setUsername] = useState("");
-  const router = createBrowserRouter([
+  const router = createBrowserRouter(
+    [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/chat",
+        element: <Chat />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+      },
+    ],
     {
-      path: "/",
-      element: <Home />,
-    },
-    {
-      path: "/login",
-      element: <Login />,
-    },
-    {
-      path: "/chat",
-      element: <Chat />,
-    },
-    {
-      path: "/register",
-      element: <Register />,
-    },
-  ]);
+      basename: "/chat-app",
+    }
+  );
 
   return (
     <>
