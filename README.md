@@ -1,7 +1,7 @@
 # Chat App
 
 ## Description
-Fullstack chat app built using .NET and React. The app uses SignalR to implement real time features. Can check the deployed app [here](https://crokibolt.gitub.io/chat-app)
+Fullstack chat app built using .NET and React. The app uses SignalR to implement real time features. Can check the deployed app [here](https://crokibolt.github.io/chat-app)
 
 ## How to run locally
 After you clone the repository you need to set your DbConnection in the appsettings.json inside the ChatApi folder, the string should connect to a postgres database. After that execute the following commands on your terminal
