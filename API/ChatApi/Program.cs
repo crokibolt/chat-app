@@ -14,7 +14,7 @@ builder.Services.AddAuthentication("default")
     .AddCookie("default", o =>
     {
         o.Cookie.Name = "auth";
-        o.Cookie.Domain = "localhost";
+        o.Cookie.Domain = "chat-api-8ur2.onrender.com";
         o.Cookie.SameSite = SameSiteMode.None;
         o.Cookie.SecurePolicy = CookieSecurePolicy.Always;
         o.ExpireTimeSpan = TimeSpan.FromMinutes(40);
@@ -35,7 +35,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: allowOrigins,
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000", "https://localhost:3000")
+            policy.WithOrigins("http://localhost:3000", "https://localhost:3000",
+                                "https://crokibolt.github.io/chat-app")
                                         .AllowCredentials()
                                         .AllowAnyHeader()
                                         .AllowAnyMethod();
