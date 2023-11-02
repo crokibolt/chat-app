@@ -1,4 +1,5 @@
 import { logout } from "../Helpers/fetchHelper";
+import { Link } from "react-router-dom";
 
 interface HeaderProps {
   username: string;
@@ -10,9 +11,9 @@ function Header({ username }: HeaderProps) {
       className="w-screen h-80px flex justify-between p-5 bg-orange-600 
         text-gray-800"
     >
-      <a className="text-4xl select-none cursor-pointer" href="/">
+      <Link className="text-4xl select-none cursor-pointer" to={"/"}>
         Awesome Chat
-      </a>
+      </Link>
       {username != "" ? (
         <h3 onClick={() => logout()} className="text-2xl cursor-pointer group">
           Logout
